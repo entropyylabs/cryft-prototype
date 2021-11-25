@@ -1,5 +1,12 @@
-import React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import AppLoading from "expo-app-loading";
 import {
@@ -9,8 +16,10 @@ import {
 } from "@expo-google-fonts/nunito";
 import { Khand_600SemiBold } from "@expo-google-fonts/khand";
 import { Ionicons } from "@expo/vector-icons";
+import WalletID from "./WalletID";
 
 const HomeCard = () => {
+  const [modalVisible, setModalVisible] = useState(true);
   let [fontsLoaded] = useFonts({
     Nunito_600SemiBold,
     Khand_600SemiBold,
@@ -39,13 +48,35 @@ const HomeCard = () => {
             </Text>
           </View>
 
-          <View style={styles.walletIdButton}>
-            <Text style={styles.walletIdButtonText}>
-              <Ionicons name='md-barcode-sharp' size={18} color='white' />
-              &nbsp; View wallet ID
-            </Text>
-          </View>
+          <Pressable
+            onPress={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.walletIdButton}>
+              <Text style={styles.walletIdButtonText}>
+                <Ionicons name='md-barcode-sharp' size={18} color='white' />
+                &nbsp; View wallet ID
+              </Text>
+            </View>
+          </Pressable>
         </View>
+        <Modal
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <TouchableOpacity
+            style={styles.overlay}
+            onPressOut={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <WalletID />
+          </TouchableOpacity>
+        </Modal>
       </LinearGradient>
     );
   }
@@ -104,6 +135,12 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontFamily: "Nunito_300Light",
     fontSize: 18,
+  },
+  overlay: {
+    backgroundColor: "#000000aa",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
