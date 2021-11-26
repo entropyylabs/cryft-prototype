@@ -17,9 +17,11 @@ import {
   Nunito_300Light,
 } from "@expo-google-fonts/nunito";
 import WalletID from "./WalletID";
+import Send from "./Send";
 
 const ActionButton = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   let [fontsLoaded] = useFonts({
     Nunito_600SemiBold,
     Nunito_300Light,
@@ -29,12 +31,21 @@ const ActionButton = () => {
   } else {
     return (
       <View style={styles.buttonHolder}>
-        <View style={styles.buttonGroup}>
-          <Feather name='arrow-up-right' size={24} color='white' />
-          <Text style={styles.buttonText}>Send</Text>
-        </View>
         <Pressable
           onPress={() => {
+            setModalContent("send");
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.buttonGroup}>
+            <Feather name='arrow-up-right' size={24} color='white' />
+            <Text style={styles.buttonText}>Send</Text>
+          </View>
+        </Pressable>
+
+        <Pressable
+          onPress={() => {
+            setModalContent("receive");
             setModalVisible(!modalVisible);
           }}
         >
@@ -48,6 +59,7 @@ const ActionButton = () => {
           <AntDesign name='staro' size={24} color='white' />
           <Text style={styles.buttonText}>History</Text>
         </View>
+
         <View style={styles.buttonGroup}>
           <FontAwesome5 name='exchange-alt' size={24} color='white' />
           <Text style={styles.buttonText}>Exchange</Text>
@@ -66,7 +78,8 @@ const ActionButton = () => {
             }}
           >
             <TouchableOpacity onPress={() => {}} activeOpacity={1}>
-              <WalletID />
+              {modalContent == "send" && <Send />}
+              {modalContent == "receive" && <WalletID />}
             </TouchableOpacity>
           </TouchableOpacity>
         </Modal>
