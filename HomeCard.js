@@ -19,7 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 import WalletID from "./WalletID";
 
 const HomeCard = () => {
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   let [fontsLoaded] = useFonts({
     Nunito_600SemiBold,
     Khand_600SemiBold,
@@ -74,7 +74,9 @@ const HomeCard = () => {
               setModalVisible(!modalVisible);
             }}
           >
-            <WalletID />
+            <TouchableOpacity onPress={() => {}} activeOpacity={1}>
+              <WalletID />
+            </TouchableOpacity>
           </TouchableOpacity>
         </Modal>
       </LinearGradient>
