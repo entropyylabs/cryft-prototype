@@ -45,6 +45,7 @@ const Navbar = () => {
 
 const styles = StyleSheet.create({
   navContainer: {
+    zIndex: 100,
     height: 71,
     borderTopEndRadius: 20,
     borderTopStartRadius: 20,
